@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('serverFrame').style.display = 'none';
   document.getElementById('serverSelect').style.display = 'none';
   
-  fetch(`https://bolasiar.vercel.app/api/channel?id=${id}`)
+  fetch(`https://golfot.my.id/api/channel?id=${id}`)
   .then(response => response.json())
   .then(data => {
   const serverData = data;
