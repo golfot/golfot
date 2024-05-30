@@ -12,7 +12,7 @@
   // cuplikan
   
   document.addEventListener('DOMContentLoaded', () => {
-  const url = 'https://bolasiar.vercel.app/api/cuplikan?id=17';
+  const url = 'https://golfot.my.id/api/cuplikan?id=17';
   $('#loadingSpinner').show();
   $('#datas').hide();
   
@@ -60,7 +60,7 @@
   
   // detail
   
-  fetch('https://bolasiar.vercel.app/api/infoliga?id=47')
+  fetch('https://golfot.my.id/api/infoliga?id=47')
   .then(response => response.json())
   .then(data => {
   // Set image source
@@ -77,7 +77,7 @@
   // berita
   
   document.addEventListener('DOMContentLoaded', () => {
-  const url = 'https://bolasiar.vercel.app/api/news?id=87';
+  const url = 'https://golfot.my.id/api/news?id=87';
   $('#loadingSpinner').show();
   $('#datas').hide();
   
