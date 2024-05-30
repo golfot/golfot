@@ -16,7 +16,7 @@ module.exports = (req, res) => {
     }
 
     // Mengambil ID dari query
-    const id = req.query.id || 2;
+    const id = req.query.id || '2';
 
     if (!id) {
         res.status(400).json({ error: 'Parameter id tidak ditemukan' });
