@@ -77,7 +77,7 @@
   // berita
   
   document.addEventListener('DOMContentLoaded', () => {
-  const url = 'https://golfot.my.id/api/news?id=87';
+  const url = 'https://golfot.my.id/api/news?id=47';
   $('#loadingSpinner').show();
   $('#datas').hide();
   
