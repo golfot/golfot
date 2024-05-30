@@ -19,5 +19,9 @@
          "src":"/(.*)",
          "dest":"/public/$1"
       }
-   ]
+   ],
+    "errorPages": {
+    "404": "/public/404.html",
+    "500": "/public/500.html"
+  }
 }
