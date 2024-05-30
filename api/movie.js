@@ -1,7 +1,7 @@
 const https = require('https');
 const { JSDOM } = require('jsdom');
 
-const targetUrl = 'https://tv.idlixofficial.net/movie/page/';
+const targetUrl = 'https://tv.idlixofficial.net/movie/page/3/';
 
 module.exports = (req, res) => {
     // Menambahkan header CORS ke dalam respons
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
     };
 
     // Melakukan permintaan GET ke targetUrl dengan ID yang diberikan
-    https.get(targetUrl + id, options, (response) => {
+    https.get(targetUrl, (response) => {
         let html = ''; // Variabel untuk menyimpan data HTML
 
         // Kumpulkan data HTML ketika ada
