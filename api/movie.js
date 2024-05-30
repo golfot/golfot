@@ -1,7 +1,7 @@
 const https = require('https');
 const { JSDOM } = require('jsdom');
 
-const targetUrl = 'https://tv.idlixofficial.net/movie/page/3/';
+const targetUrl = 'https://tv.idlixofficial.net/movie/page/';
 
 module.exports = (req, res) => {
     // Menambahkan header CORS ke dalam respons
@@ -16,7 +16,7 @@ module.exports = (req, res) => {
     }
 
     // Mengambil ID dari query
-    const id = req.query.id;
+    const id = req.query.id || 2;
 
     if (!id) {
         res.status(400).json({ error: 'Parameter id tidak ditemukan' });
