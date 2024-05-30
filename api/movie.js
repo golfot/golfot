@@ -23,8 +23,15 @@ module.exports = (req, res) => {
         return;
     }
 
+    // Menentukan header User-Agent
+    const options = {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+        }
+    };
+
     // Melakukan permintaan GET ke targetUrl dengan ID yang diberikan
-    https.get(targetUrl + id, (response) => {
+    https.get(targetUrl + id, options, (response) => {
         let html = ''; // Variabel untuk menyimpan data HTML
 
         // Kumpulkan data HTML ketika ada
