@@ -1,7 +1,9 @@
 const https = require('https');
 const { JSDOM } = require('jsdom');
 
-module.exports = async (req, res) => {
+const targetUrl = 'https://tv.idlixofficial.net/movie/page/';
+
+module.exports = (req, res) => {
     // Menambahkan header CORS ke dalam respons
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -13,6 +15,7 @@ module.exports = async (req, res) => {
         return;
     }
 
+    // Mengambil ID dari query
     const id = req.query.id;
 
     if (!id) {
@@ -20,33 +23,41 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const targetUrl = `https://tv.idlixofficial.net/movie/page/${id}`;
-    const moviesData = [];
+    // Melakukan permintaan GET ke targetUrl dengan ID yang diberikan
+    https.get(targetUrl + id, (response) => {
+        let html = ''; // Variabel untuk menyimpan data HTML
 
-    https.get(targetUrl, (response) => {
-        let data = '';
-
-        // Menerima data dari stream
+        // Kumpulkan data HTML ketika ada
         response.on('data', (chunk) => {
-            data += chunk;
+            html += chunk;
         });
 
+        // Setelah semua data diterima
         response.on('end', () => {
             try {
-                // Mem-parse HTML menggunakan JSDOM
-                const { document } = new JSDOM(data).window;
-                // Memilih semua elemen film dari halaman
+                // Membuat objek DOM dari HTML yang diterima
+                const dom = new JSDOM(html);
+                const document = dom.window.document;
+
+                // Menemukan semua elemen film
                 const movies = Array.from(document.querySelectorAll('div#archive-content article.item.movies'));
-                
-                // Mengambil data yang diperlukan dari setiap film dan push ke dalam array moviesData
+
+                // Array untuk menyimpan data film
+                const moviesData = [];
+
                 movies.forEach(movie => {
+                    // Mengambil slug dari elemen <h3> yang di dalamnya terdapat elemen <a>
                     const slugElement = movie.querySelector('h3 a');
-                    const movieObj = {
-                        slug: slugElement.getAttribute('href'),
-                        poster: movie.querySelector('img').getAttribute('src'),
-                        title: movie.querySelector('h3').textContent.trim()
-                    };
-                    moviesData.push(movieObj);
+                    const slug = slugElement.getAttribute('href');
+                    const poster = movie.querySelector('img').getAttribute('src');
+                    const title = slugElement.textContent.trim();
+
+                    // Menambahkan data film ke dalam array moviesData
+                    moviesData.push({
+                        slug: slug,
+                        poster: poster,
+                        title: title
+                    });
                 });
 
                 // Menanggapi dengan data film dalam format JSON
