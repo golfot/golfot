@@ -25,11 +25,11 @@
     {
       "src": "/(.*)",
       "status": 404,
-      "dest": "/404.html"
+      "dest": "/public/404.html"
     }
   ],
   "errorPages": {
-    "404": "/404.html",
-    "500": "/500.html"
+    "404": "/public/404.html",
+    "500": "/public/500.html"
   }
 }
