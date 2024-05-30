@@ -1,4 +1,3 @@
-
 const https = require('https');
 const { JSDOM } = require('jsdom');
 
@@ -21,8 +20,10 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const targetUrl = 'https://tv.idlixofficial.net/movie/page/';
-    https.get(targetUrl + id, (response) => {
+    const targetUrl = `https://tv.idlixofficial.net/movie/page/${id}`;
+    const moviesData = [];
+
+    https.get(targetUrl, (response) => {
         let data = '';
 
         // Menerima data dari stream
@@ -36,14 +37,19 @@ module.exports = async (req, res) => {
                 const { document } = new JSDOM(data).window;
                 // Memilih semua elemen film dari halaman
                 const movies = Array.from(document.querySelectorAll('div#archive-content article.item.movies'));
-                // Mengambil data yang diperlukan dari setiap film
-                const movieData = movies.map(movie => ({
-                    slug: movie.querySelector('a').getAttribute('href'),
-                    poster: movie.querySelector('img').getAttribute('src'),
-                    title: movie.querySelector('h3').textContent.trim()
-                }));
+                
+                // Mengambil data yang diperlukan dari setiap film dan push ke dalam array moviesData
+                movies.forEach(movie => {
+                    const movieObj = {
+                        slug: movie.querySelector('a').getAttribute('href'),
+                        poster: movie.querySelector('img').getAttribute('src'),
+                        title: movie.querySelector('h3').textContent.trim()
+                    };
+                    moviesData.push(movieObj);
+                });
+
                 // Menanggapi dengan data film dalam format JSON
-                res.status(200).json(movieData);
+                res.status(200).json(moviesData);
             } catch (error) {
                 res.status(500).json({ error: 'Internal Server Error' });
             }
