@@ -4,7 +4,7 @@ function fetchMatchData() {
   $('#datas').hide();
   
   $.ajax({
-  url: 'https://bolasiar.vercel.app/api/scrape',
+  url: 'https://golfot.my.id/api/scrape',
   type: 'GET',
   headers: {
   'Content-Type': 'application/x-www-form-urlencoded'
