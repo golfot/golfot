@@ -40,8 +40,9 @@ module.exports = async (req, res) => {
                 
                 // Mengambil data yang diperlukan dari setiap film dan push ke dalam array moviesData
                 movies.forEach(movie => {
+                    const slugElement = movie.querySelector('h3 a');
                     const movieObj = {
-                        slug: movie.querySelector('a').getAttribute('href'),
+                        slug: slugElement.getAttribute('href'),
                         poster: movie.querySelector('img').getAttribute('src'),
                         title: movie.querySelector('h3').textContent.trim()
                     };
