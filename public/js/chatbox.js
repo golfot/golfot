@@ -10,9 +10,37 @@ const btnLoading = document.querySelector('.btn-loading');
 $('#shimmer').show();
 $('#chat-box').hide();
 
+
 // URL API
-const links = 'https://script.google.com/macros/s/AKfycbwYatXMG1vdnLsWsx4oioXy8M9gLiWeLbFhdWYX7dMjIX-6lY-7PaK0Ipmjg0dPx4TLvQ/exec';
+const links = 'https://script.google.com/macros/s/AKfycbyYQgO3Sa8hVhrCCxo79P33uXDYaOSEvA3n2nPhHGl-gSGsCiq1YRuEQPzhkPgNNU3Syw/exec';
  
+  function timeAgo(timestamp) {
+  const now = new Date();
+  const messageTime = new Date(timestamp * 1000); // Konversi detik ke milidetik
+  const seconds = Math.floor((now - messageTime) / 1000);
+  let interval = Math.floor(seconds / 31536000);
+  
+  if (interval > 1) {
+  return interval + " years ago";
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) {
+  return interval + " months ago";
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval > 1) {
+  return interval + " days ago";
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval > 1) {
+  return interval + " hours ago";
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+  return interval + " minutes ago";
+  }
+  return Math.floor(seconds) + " seconds ago";
+  }
   
   
   // Fungsi untuk memuat pesan
@@ -48,35 +76,6 @@ const links = 'https://script.google.com/macros/s/AKfycbwYatXMG1vdnLsWsx4oioXy8M
   });
   }
 
-// Fungsi untuk menghitung waktu yang lalu dari sebuah tanggal
-function timeAgo(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
-    
-    let interval = Math.floor(seconds / 31536000);
-    
-    if (interval > 1) {
-        return `${interval} Tahun lalu`;
-    }
-    interval = Math.floor(seconds / 2592000);
-    if (interval > 1) {
-        return `${interval} Bulan lalu`;
-    }
-    interval = Math.floor(seconds / 86400);
-    if (interval > 1) {
-        return `${interval} Hari lalu`;
-    }
-    interval = Math.floor(seconds / 3600);
-    if (interval > 1) {
-        return `${interval} Jam lalu`;
-    }
-    interval = Math.floor(seconds / 60);
-    if (interval > 1) {
-        return `${interval} Menit lalu`;
-    }
-    return `${Math.floor(seconds)} Detik lalu`;
-}
 
 // Fungsi untuk menghasilkan nama acak dalam format user-XXXX
     function generateRandomName() {
@@ -94,6 +93,10 @@ function addMessage(event) {
     event.preventDefault(); // Mencegah form mengirimkan data
 
     const guestMessage = messageInput.value.trim();
+    
+   // Mengambil nilai tanggals
+
+
 
     document.getElementById('send-button').style.display = 'none';
     document.getElementById('btn-loading').style.display = 'inline';
@@ -101,6 +104,7 @@ function addMessage(event) {
     if (guestMessage) {
         const randomName = generateRandomName();
         const randomNameAva = generateRandomAvatar();
+        
         
         const body = JSON.stringify({
             action: 'create',
