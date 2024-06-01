@@ -1,0 +1,14 @@
+{
+    "name": "Golfot",
+    "short_name": "Golfot",
+    "icons": [
+        {
+            "src": "fav/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0c080a",
+    "background_color": "#0c080a",
+    "display": "standalone"
+}
