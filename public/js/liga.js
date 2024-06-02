@@ -33,7 +33,7 @@
            $('#klas').hide();
            $('#beritaid').hide();
            
-           const apiCuplikan = `https://golfot.my.id/api/cuplikan?id=17`;
+           const apiCuplikan = `https://golfot.my.id/api/cuplikan?id=${cu}`;
            const newsContainer1 = document.getElementById('cuplikan');
            
            fetch(apiCuplikan)
