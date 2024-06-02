@@ -19,26 +19,39 @@ module.exports = async (req, res) => {
 
     try {
         const response = await fetch(url);
+
+        // Memeriksa apakah respons berhasil
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
+
+        // Memeriksa apakah data dan kunci 'data' tersedia
+        if (!data || !data.data) {
+            throw new Error('Invalid data structure');
+        }
 
         // Mengambil 'key' dari respons
         const key = data.key;
 
         // Mengambil informasi yang dibutuhkan dari array 'data'
         const userData = data.data.map(item => {
-            const videoEntity = item.mediaEntities?.find(media => media.type === 'video');
-            const mp4Variant = videoEntity?.videoInfo?.variants?.find(variant => variant.type === 'video/mp4');
+            const mediaEntity = item.mediaEntities?.find(media => media.type === 'video' || media.type === 'photo');
+            const mp4Variant = mediaEntity?.type === 'video' 
+                ? mediaEntity?.videoInfo?.variants?.find(variant => variant.type === 'video/mp4') 
+                : null;
 
             return {
                 text: item.text,
-                type: videoEntity?.type,
-                videoURL: mp4Variant?.url
+                type: mediaEntity ? mediaEntity.type : null,
+                videoURL: mp4Variant ? mp4Variant.url : null
             };
-        }).filter(item => item.videoURL); // Hanya menyertakan item yang memiliki videoURL
+        });
 
         res.json({ key, userData });
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error.message);
         res.status(500).json({ error: 'Error fetching data' });
     }
 };
