@@ -21,16 +21,22 @@ module.exports = async (req, res) => {
         const response = await fetch(url);
         const data = await response.json();
 
-        // Mengambil 'key' dan array 'data' dari respons
+        // Mengambil 'key' dari respons
         const key = data.key;
-        const userData = data.data;
 
-        // Mengambil mediaEntities dengan tipe 'video'
-        const videoEntities = userData.map(item => {
-            return item.mediaEntities ? item.mediaEntities.filter(media => media.type === 'video') : [];
-        }).flat();
+        // Mengambil informasi yang dibutuhkan dari array 'data'
+        const userData = data.data.map(item => {
+            const videoEntity = item.mediaEntities?.find(media => media.type === 'video');
+            const mp4Variant = videoEntity?.videoInfo?.variants?.find(variant => variant.type === 'video/mp4');
 
-        res.json({ key, videoEntities });
+            return {
+                text: item.text,
+                type: videoEntity?.type,
+                videoURL: mp4Variant?.url
+            };
+        }).filter(item => item.videoURL); // Hanya menyertakan item yang memiliki videoURL
+
+        res.json({ key, userData });
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: 'Error fetching data' });
