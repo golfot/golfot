@@ -1,9 +1,20 @@
-const axios = require('axios');
+const fetch = require('node-fetch');
 
-const fetchData = async () => {
+module.exports = async (req, res) => {
+    // Menambahkan header CORS ke dalam respons
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Mengatasi preflight request (OPTIONS)
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+
     try {
-        const response = await axios.get('https://api.sotwe.com/v3/user/aditendeur?after=');
-        const responseData = response.data;
+        const response = await fetch('https://api.sotwe.com/v3/user/aditendeur?after=');
+        const responseData = await response.json();
 
         const result = {
             after: responseData.after,
@@ -19,13 +30,9 @@ const fetchData = async () => {
             }).filter(video => video !== null)
         };
 
-        return JSON.stringify(result, null, 2);
+        res.status(200).json(result);
     } catch (error) {
-        console.error('Error wuhh:', error);
-        return JSON.stringify({ error: 'Error wuh' }, null, 2);
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'Error fetching data' });
     }
 };
-
-fetchData()
-    .then(jsonResult => console.log(jsonResult))
-    .catch(err => console.error('Error:', err));
