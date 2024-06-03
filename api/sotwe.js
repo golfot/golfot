@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    const url = 'https://api.sotwe.com/v3/user/aditendeur?after=';
+    const url = 'https://api.sotwe.com/v3/user/aditendeur';
 
     try {
         const response = await axios.get(url);
