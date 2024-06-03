@@ -13,11 +13,26 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const response = await fetch('https://api.sotwe.com/v3/user/aditendeur?after=');
+        const response = await fetch('https://api.sotwe.com/v3/user/aditendeur');
         const data = await response.json();
-        res.status(200).json(data);
+
+        const result = {
+            after: data.after,
+            videos: data.data.map(post => {
+                const videoEntities = post.mediaEntities || post.retweetedStatus?.mediaEntities;
+                if (videoEntities && videoEntities.length > 0) {
+                    const videoUrl = videoEntities[0].videoInfo?.variants?.find(variant => variant.type === 'video/mp4')?.url || '';
+                    const displayURL = videoEntities[0].displayURL || '';
+                    const type = videoEntities[0].type || '';
+                    return { displayURL, type };
+                }
+                return null;
+            }).filter(video => video !== null)
+        };
+
+        res.status(200).json(result);
     } catch (error) {
         console.error('Error fetching data:', error);
-        res.status(500).json({ error: 'Error fetching data' });
+        res.status(500).json({ error: 'Error' });
     }
 };
