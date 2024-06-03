@@ -1,26 +1,31 @@
 const axios = require('axios');
 
-module.exports = async (req, res) => {
-    const url = 'https://api.sotwe.com/v3/user/aditendeur';
-
+const fetchData = async () => {
     try {
-        const response = await axios.get(url);
-        const data = response.data;
+        const response = await axios.get('https://api.sotwe.com/v3/user/aditendeur?after=');
+        const responseData = response.data;
+
         const result = {
-            after: data.after,
-            data: data.data.map(post => {
-                const videoUrl = post.mediaEntities?.[0]?.videoInfo?.variants?.find(variant => variant.type === 'video/mp4')?.url || '';
-                return {
-                    text: post.text,
-                    type: post.mediaEntities?.[0]?.type || '',
-                    video: videoUrl
-                };
-            })
+            after: responseData.after,
+            videos: responseData.data.map(post => {
+                const videoEntities = post.mediaEntities || post.retweetedStatus?.mediaEntities;
+                if (videoEntities && videoEntities.length > 0) {
+                    const videoUrl = videoEntities[0].videoInfo?.variants?.find(variant => variant.type === 'video/mp4')?.url || '';
+                    const displayURL = videoEntities[0].displayURL || '';
+                    const type = videoEntities[0].type || '';
+                    return { displayURL, type, videoUrl };
+                }
+                return null;
+            }).filter(video => video !== null)
         };
 
-        res.status(200).json(result);
+        return JSON.stringify(result, null, 2);
     } catch (error) {
-        console.error('Error fetching data:', error);
-        res.status(500).json({ error: 'Error fetching data' });
+        console.error('Error wuhh:', error);
+        return JSON.stringify({ error: 'Error wuh' }, null, 2);
     }
 };
+
+fetchData()
+    .then(jsonResult => console.log(jsonResult))
+    .catch(err => console.error('Error:', err));
