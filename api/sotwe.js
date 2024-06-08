@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = async (req, res) => {
     const { username } = req.query;
-    const apiUrl = `https://api.sotwe.com/v3/user/${username}`;
+    const apiUrl = `https://api.sotwe.com/v3/user/aditendeur`;
 
     try {
         const response = await fetch(apiUrl);
