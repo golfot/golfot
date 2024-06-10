@@ -1,79 +1,40 @@
 const https = require('https');
-const { JSDOM } = require('jsdom');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
-const targetUrl = 'https://tv.idlixofficial.net/movie/page/';
+const url = 'https://new6.ngefilm21.yachts/country/indonesia/page/3';
 
-module.exports = (req, res) => {
-    // Menambahkan header CORS ke dalam respons
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+https.get(url, (res) => {
+    let data = '';
 
-    // Mengatasi preflight request (OPTIONS)
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    // Mengambil ID dari query
-    const id = req.query.id || '2';
-
-    if (!id) {
-        res.status(400).json({ error: 'Parameter id tidak ditemukan' });
-        return;
-    }
-
-    // Menentukan header User-Agent
-    const options = {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-        }
-    };
-
-    // Melakukan permintaan GET ke targetUrl dengan ID yang diberikan
-    https.get(targetUrl, (response) => {
-        let html = ''; // Variabel untuk menyimpan data HTML
-
-        // Kumpulkan data HTML ketika ada
-        response.on('data', (chunk) => {
-            html += chunk;
-        });
-
-        // Setelah semua data diterima
-        response.on('end', () => {
-            try {
-                // Membuat objek DOM dari HTML yang diterima
-                const dom = new JSDOM(html);
-                const document = dom.window.document;
-
-                // Menemukan semua elemen film
-                const movies = Array.from(document.querySelectorAll('div#archive-content article.item.movies'));
-
-                // Array untuk menyimpan data film
-                const moviesData = [];
-
-                movies.forEach(movie => {
-                    // Mengambil slug dari elemen <h3> yang di dalamnya terdapat elemen <a>
-                    const slugElement = movie.querySelector('h3 a');
-                    const slug = slugElement.getAttribute('href');
-                    const poster = movie.querySelector('img').getAttribute('src');
-                    const title = slugElement.textContent.trim();
-
-                    // Menambahkan data film ke dalam array moviesData
-                    moviesData.push({
-                        slug: slug,
-                        poster: poster,
-                        title: title
-                    });
-                });
-
-                // Menanggapi dengan data film dalam format JSON
-                res.status(200).json(moviesData);
-            } catch (error) {
-                res.status(500).json({ error: 'Internal Server Error' });
-            }
-        });
-    }).on('error', (error) => {
-        res.status(500).json({ error: 'Internal Server Error' });
+    // Mengumpulkan data yang diterima
+    res.on('data', (chunk) => {
+        data += chunk;
     });
-};
+
+    // Proses data setelah selesai diterima
+    res.on('end', () => {
+        const dom = new JSDOM(data);
+        const document = dom.window.document;
+
+        const articles = document.querySelectorAll('article');
+        let results = [];
+
+        articles.forEach(article => {
+            const img = article.querySelector('img');
+            const title = article.querySelector('h2');
+            const link = title.querySelector('a');
+
+            results.push({
+                poster: img ? img.src : 'N/A',
+                title: title ? title.textContent : 'N/A',
+                slug: link ? link.href : 'N/A'
+            });
+        });
+
+        console.log(JSON.stringify(results, null, 2));
+    });
+
+}).on('error', (err) => {
+    console.error('Error:', err.message);
+});
