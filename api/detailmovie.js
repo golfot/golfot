@@ -38,14 +38,26 @@ module.exports = async (req, res) => {
             let detailMovie = [];
 
             detailMovieElements.forEach(element => {
-                const textContent = element.textContent.trim();
-                detailMovie.push(textContent);
+                const lines = element.textContent.trim().split('\n');
+                let detailObject = {};
+                lines.forEach(line => {
+                    const parts = line.split(':');
+                    const key = parts[0].trim();
+                    const value = parts[1].trim();
+                    detailObject[key] = value;
+                });
+                detailMovie.push(detailObject);
             });
+
+            // Mengambil URL dari elemen iframe
+            const iframeElement = document.querySelector('iframe');
+            const iframeUrl = iframeElement ? iframeElement.getAttribute('src') : 'N/A';
 
             // Membuat objek detail movie
             const detailMovieObject = {
                 simpinis,
-                detailMovie
+                detailMovie,
+                iframeUrl
             };
 
             res.status(200).json(detailMovieObject);
