@@ -14,10 +14,10 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const numberpage = req.query.numberpage !== undefined ? req.query.numberpage : 1;
+    const page = req.query.page !== undefined ? req.query.page : 1;
     let url = 'https://new6.ngefilm21.yachts/country/indonesia/';
-    if (numberpage !== 1) {
-        url += `page/${numberpage}`;
+    if (page !== 1) {
+        url += `page/${page}/`;
     }
 
     https.get(url, (response) => {
