@@ -2,8 +2,6 @@ const https = require('https');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const url = 'https://new6.ngefilm21.yachts/country/indonesia/page/3/';
-
 module.exports = async (req, res) => {
     // Menambahkan header CORS ke dalam respons
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,6 +13,9 @@ module.exports = async (req, res) => {
         res.status(200).end();
         return;
     }
+
+    const numberpage = req.query.numberpage || '1';
+    const url = `https://new6.ngefilm21.yachts/country/indonesia/page/${numberpage}/`;
 
     https.get(url, (response) => {
         let data = '';
