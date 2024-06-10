@@ -44,10 +44,14 @@ module.exports = async (req, res) => {
                 // Menghapus bagian "https" dan domain dari slug menggunakan regex
                 slug = slug.replace(/^https?:\/\/[^/]+/, '');
 
+                 // Menetapkan nilai type berdasarkan nilai slug
+                const type = slug.includes('/tv/') ? 'tv' : 'movie';
+                
                 results.push({
                     poster,
                     title,
-                    slug
+                    slug,
+                    type
                 });
             });
 
