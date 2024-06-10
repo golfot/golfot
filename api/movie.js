@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const numberpage = req.query.numberpage || '1';
+    const numberpage = req.query.numberpage !== undefined ? req.query.numberpage : 1;
     const url = `https://new6.ngefilm21.yachts/country/indonesia/page/${numberpage}/`;
 
     https.get(url, (response) => {
