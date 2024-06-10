@@ -33,9 +33,14 @@ module.exports = async (req, res) => {
             const simpinisElement = document.querySelector('p span');
             const simpinis = simpinisElement ? simpinisElement.textContent.trim() : 'N/A';
 
-            // Mengambil data detail movie
-            const detailMovieElement = document.querySelector('div[class="gmr-moviedata"]');
-            const detailMovie = detailMovieElement ? detailMovieElement.textContent.trim() : 'N/A';
+            // Mengambil semua data detail movie
+            const detailMovieElements = document.querySelectorAll('div.gmr-moviedata');
+            let detailMovie = [];
+
+            detailMovieElements.forEach(element => {
+                const textContent = element.textContent.trim();
+                detailMovie.push(textContent);
+            });
 
             // Membuat objek detail movie
             const detailMovieObject = {
