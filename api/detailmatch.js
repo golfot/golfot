@@ -35,10 +35,7 @@ module.exports = (req, res) => {
         return;
     }
 
-    if (!id) {
-        res.status(500).json({ error: 'Error bosskuh' });
-        return;
-    }
+
     
     https.get(targetUrl + id, (response) => {
         let data = '';
