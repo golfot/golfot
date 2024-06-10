@@ -14,10 +14,10 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const page = req.query.page !== undefined ? req.query.page : 1;
+    const numberpage = req.query.numberpage !== undefined ? req.query.numberpage : 1;
     let url = 'https://new6.ngefilm21.yachts/country/indonesia/';
-    if (page !== 1) {
-        url += `page/${page}/`;
+    if (numberpage !== 1) {
+        url += `page/${numberpage}/`;
     }
 
     https.get(url, (response) => {
@@ -39,7 +39,10 @@ module.exports = async (req, res) => {
             articles.forEach(article => {
                 const poster = article.querySelector('img') ? article.querySelector('img').getAttribute('src') : 'N/A';
                 const title = article.querySelector('h2') ? article.querySelector('h2').textContent.trim() : 'N/A';
-                const slug = article.querySelector('h2 a') ? article.querySelector('h2 a').getAttribute('href') : 'N/A';
+                let slug = article.querySelector('h2 a') ? article.querySelector('h2 a').getAttribute('href') : 'N/A';
+                
+                // Menghapus bagian "https" dan domain dari slug menggunakan regex
+                slug = slug.replace(/^https?:\/\/[^/]+/, '');
 
                 results.push({
                     poster,
