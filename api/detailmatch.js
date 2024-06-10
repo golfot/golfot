@@ -34,6 +34,11 @@ module.exports = (req, res) => {
         res.status(400).json({ error: 'Parameter id tidak ditemukan' });
         return;
     }
+
+    if (!id) {
+        res.status(500).json({ error: 'Error bosskuh' });
+        return;
+    }
     
     https.get(targetUrl + id, (response) => {
         let data = '';
