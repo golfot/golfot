@@ -33,14 +33,14 @@ module.exports = async (req, res) => {
             let results = [];
 
             articles.forEach(article => {
-                const img = article.querySelector('img');
-                const title = article.querySelector('h2');
-                const link = title.querySelector('a');
+                const poster = article.querySelector('img') ? article.querySelector('img').getAttribute('src') : 'N/A';
+                const title = article.querySelector('h2') ? article.querySelector('h2').textContent.trim() : 'N/A';
+                const slug = article.querySelector('h2 a') ? article.querySelector('h2 a').getAttribute('href') : 'N/A';
 
                 results.push({
-                    poster: img ? img.src : 'N/A',
-                    title: title ? title.textContent.trim() : 'N/A',
-                    slug: link ? link.href : 'N/A'
+                    poster,
+                    title,
+                    slug
                 });
             });
 
