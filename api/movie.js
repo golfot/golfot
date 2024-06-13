@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
             let results = [];
 
             articles.forEach(article => {
-                const poster = article.querySelector('img') ? article.querySelector('img').getAttribute('src') : 'N/A';
+                const poster = article.querySelector('img[class="attachment-medium size-medium wp-post-image"') ? article.querySelector('img[class="attachment-medium size-medium wp-post-image"').getAttribute('src') : 'N/A';
                 const title = article.querySelector('h2') ? article.querySelector('h2').textContent.trim() : 'N/A';
                 let slug = article.querySelector('h2 a') ? article.querySelector('h2 a').getAttribute('href') : 'N/A';
 
