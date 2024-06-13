@@ -5,9 +5,9 @@ const port = 3000;
 
 async function loadUrlWithReferer() {
     try {
-        const response = await axios.get('https://golfot.my.id', {
+        const response = await axios.get('https://vidhidepre.com/embed/v5xyj2j9puch', {
             headers: {
-                'Referer': 'https://golfot.my.id/'
+                'Referer': 'https://artist.dutamovie21.cloud/'
             }
         });
         return response.data;
