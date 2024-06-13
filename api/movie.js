@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
 
     const urls = 'https://artist.dutamovie21.cloud/';
-    let url = `${urls}?s=/${search}&search=advanced&post_type=&index=&orderby=&genre=&movieyear=&country=indonesia&quality=`;
+    let url = `${urls}?s=${search}&search=advanced&post_type=&index=&orderby=&genre=&movieyear=&country=indonesia&quality=`;
   
 
     https.get(url, (response) => {
