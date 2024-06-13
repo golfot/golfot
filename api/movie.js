@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Endpoint untuk menyajikan halaman HTML dengan iframe
-app.get('/api/player', (req, res) => {
+app.get('/api/movie', (req, res) => {
     // Set referer dan iframe URL
     const referer = "https://artist.dutamovie21.cloud/";
     const iframeUrl = "https://vidhidepre.com/embed/v5xyj2j9puch";
