@@ -12,7 +12,8 @@
     "node-fetch": "^2.6.1",
     "timeago.js": "^4.0.2",
     "axios": "^0.27.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "request": "^2.88.2"  
   },
   "author": "",
   "license": "ISC"
