@@ -14,11 +14,16 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const numberpage = req.query.numberpage !== undefined ? req.query.numberpage : 1;
-    let url = 'https://new6.ngefilm21.yachts/country/indonesia/';
-    if (numberpage !== 1) {
-        url += `page/${numberpage}/`;
+    const search = req.query.search || '';
+    // Memeriksa apakah parameter code telah diberikan
+    if (!search) {
+        res.status(400).json({ error: 'Parameter search=indonesia atau negara tidak ditemukan' });
+        return;
     }
+
+    const urls = 'https://artist.dutamovie21.cloud/';
+    let url = `${urls}?s=/${search}&search=advanced&post_type=&index=&orderby=&genre=&movieyear=&country=indonesia&quality=`;
+  
 
     https.get(url, (response) => {
         let data = '';
@@ -40,13 +45,16 @@ module.exports = async (req, res) => {
                 const poster = article.querySelector('img') ? article.querySelector('img').getAttribute('src') : 'N/A';
                 const title = article.querySelector('h2') ? article.querySelector('h2').textContent.trim() : 'N/A';
                 let slug = article.querySelector('h2 a') ? article.querySelector('h2 a').getAttribute('href') : 'N/A';
+
+                // Menetapkan nilai type berdasarkan nilai slug
+                const type = slug.includes('/tv/') ? 'tv' : 'movie';
                 
                 // Menghapus bagian "https" dan domain dari slug menggunakan regex
                 slug = slug.replace(/^https?:\/\/[^/]+/, '');
 
-                // Menetapkan nilai type berdasarkan nilai slug
-                const type = slug.includes('/tv/') ? 'tv' : 'movie';
-
+                // Menghapus simbol slash ('/') pertama dan terakhir dari slug
+                slug = slug.replace(/^\/|\/$/g, '');
+                
                 results.push({
                     poster,
                     title,
