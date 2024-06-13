@@ -1,14 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const app = express();
+const port = process.env.PORT || 3000;
 
-// GET /api/player route
-router.get('/api/movie', (req, res) => {
-    // Logic to handle player API
-    res.json({ message: 'Player API endpoint reached!' });
-});
+// Middleware untuk parse JSON bodies
+app.use(express.json());
 
-// Route to serve HTML with iframe
-router.get('/', (req, res) => {
+// Endpoint untuk menyajikan halaman HTML dengan iframe
+app.get('/api/movie', (req, res) => {
     // Set the referer URL
     const referer = "https://artist.dutamovie21.cloud/";
     // Set the iframe URL
@@ -33,4 +31,7 @@ router.get('/', (req, res) => {
     `);
 });
 
-module.exports = router;
+// Start server
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});
