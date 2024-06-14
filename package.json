@@ -13,7 +13,7 @@
     "timeago.js": "^4.0.2",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
-    "request": "^2.88.2"  
+    "puppeteer": "^13.1.0"
   },
   "author": "",
   "license": "ISC"
