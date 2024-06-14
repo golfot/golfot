@@ -7,7 +7,7 @@ export default function handler(req, res) {
     const options = {
         url: videoUrl,
         headers: {
-            'Referer': 'https: //artist.dutamovie21.cloud/'
+            'Referer': 'https://artist.dutamovie21.cloud/hit-man-2023/'
         }
     };
 
