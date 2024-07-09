@@ -79,6 +79,70 @@
   transform: scale(0.7);
   }
   
+  .toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #C53131;
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  display: flex;
+  align-items: center;
+  }
+  
+  .toast.show {
+  opacity: 1;
+  visibility: visible;
+  }
+  
+  .toast .content {
+  flex: 1;
+  }
+  
+  .toast .content .title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 18px;
+  }
+  
+  .toast .content .subtitle {
+  font-size: 14px;
+  }
+  
+  .toast .buttons {
+  display: flex;
+  align-items: center;
+  }
+  
+  .toast .buttons a {
+  background: white;
+  border: none;
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 8px 13px;
+  border-radius: 300px;
+  }
+  
+  .toast .buttons a:hover {
+  text-decoration: none;
+  }
+  
+  .toast .buttons img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin-left: 16px;
+  }
+  
   
   </style>
 
@@ -149,8 +213,8 @@
  
  </div>
  <div class="modal-footer border-0 p-4">
-  <a href="https://trakteer.id/golfot/tip" class="btn w-100 p-3 rounded-3" style="background-color: #CDF202;">Trakteer Golfot</a>
-  </div>
+ <a href="https://trakteer.id/golfot/tip" class="btn w-100 p-3 rounded-3" style="background-color: #CDF202;">Trakteer Golfot</a>
+ </div>
  
  </div>
  </div>
@@ -214,6 +278,17 @@
   </div>
   <div id="daftarMatchnoLive" class="container"></div>
   </section>
+  
+  <div class="toast" id="toast">
+  <div class="content">
+  <div class="title">Trakteer Golfot</div>
+  <div class="subtitle">Dukungan kamu sangat berarti bagi kami.</div>
+  </div>
+  <div class="buttons">
+  <a href="https://trakteer.id/golfot/tip" target="_blank">Trakteer</a>
+  <img src="images/close.png" alt="Close" onclick="closeToast()">
+  </div>
+  </div>
   
   
   </main>
