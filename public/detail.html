@@ -36,6 +36,58 @@
   <!-- css -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="css/app.css" rel="stylesheet" crossorigin="anonymous">
+
+  <script>
+  
+  function getIPAddress(callback) {
+  fetch('https://api64.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+  callback(data.ip);
+  })
+  .catch(error => console.error('Error fetching IP address:', error));
+  }
+  
+  function updateStatus(action) {
+  getIPAddress(ip => {
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbwVJnfc4d9fdQHeQLWzq4u27Ui_55qtsQEhaRG_N1h3wSb79QpyzKMpN537l52mFwqo/exec'; // Ganti dengan URL Script Anda
+  const url = `${scriptUrl}?ipAddress=${ip}&action=${action}`;
+  
+  fetch(url)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.error('Error:', error));
+  });
+  }
+  
+  function updateVisitorCount() {
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbwVJnfc4d9fdQHeQLWzq4u27Ui_55qtsQEhaRG_N1h3wSb79QpyzKMpN537l52mFwqo/exec'; // Ganti dengan URL Script Anda
+  const url = `${scriptUrl}?action=count`;
+  
+  fetch(url)
+  .then(response => response.text())
+  .then(count => {
+  document.getElementById('online').innerText = count;
+   $('#on').show();
+  })
+  .catch(error => console.error('Error:', error));
+  }
+  
+  function handlePageUnload() {
+  updateStatus('offline');
+  }
+  
+  window.onload = function() {
+  updateStatus('online');
+  updateVisitorCount();
+  setInterval(updateVisitorCount, 5000); // Perbarui jumlah pengunjung setiap 5 detik
+  window.addEventListener('beforeunload', handlePageUnload);
+  };
+  
+  window.onbeforeunload = handlePageUnload;
+  </script>
+
+  
 </head>
 
 <body style="overflow-y: hidden;">
@@ -179,31 +231,7 @@
   });
   </script>
   
-  <script>
-  function getSessionId() {
-  if (!localStorage.getItem('sessionId')) {
-  localStorage.setItem('sessionId', 'session-' + Math.random().toString(36).substr(2, 9));
-  }
-  return localStorage.getItem('sessionId');
-  }
   
-  function updateOnlineUsers() {
-  var sessionId = getSessionId();
-  var scriptURL = 'https://script.google.com/macros/s/AKfycbwRWfdrXm06yVtKQVQTQ1zbSsboEJJzbxEcJ_dY59afrhgfXZmIb2dQwg_wHJ0VU7wd7w/exec' + '?sessionId=' + sessionId;
-  
-  fetch(scriptURL)
-  .then(response => response.text())
-  .then(count => {
-  document.getElementById('online').innerText = count;
-   
-   $('#on').show();
-  
-  });
-  }
-  
-  setInterval(updateOnlineUsers, 5000); // Perbarui setiap 5 detik
-  updateOnlineUsers(); // Perbarui saat halaman dimuat
-  </script>
  
 
 
