@@ -1,4 +1,4 @@
 // api/serverurl.js
 
-const targetUrl = 'https://s2.bolasiar.bond/';
+const targetUrl = 'https://jaya.bolasiar.bond/';
 module.exports = targetUrl;
