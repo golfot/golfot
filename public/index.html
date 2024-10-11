@@ -19,14 +19,14 @@
   <meta property="og:url" content="https://golfot.my.id/" />
   <meta property="og:title" content="Golfot Live Streaming Bola Gratis - Nonton Pertandingan Sepak Bola Langsung" />
   <meta property="og:description" content="Nonton live streaming bola gratis di Golfot. Saksikan pertandingan sepak bola langsung tanpa biaya. Kualitas HD dan tanpa buffering. Nikmati semua liga favorit Anda di sini!" />
-  <meta property="og:image" content="https://golfot.my.id/images/metabanner.jpg" />
+  <meta property="og:image" content="https://golfot.my.id/images/banner.png" />
   
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://golfot.my.id/" />
   <meta property="twitter:title" content="Golfot Live Streaming Bola Gratis - Nonton Pertandingan Sepak Bola Langsung" />
   <meta property="twitter:description" content="Nonton live streaming bola gratis di Golfot. Saksikan pertandingan sepak bola langsung tanpa biaya. Kualitas HD dan tanpa buffering. Nikmati semua liga favorit Anda di sini!" />
-  <meta property="twitter:image" content="https://golfot.my.id/images/metabanner.jpg" />
+  <meta property="twitter:image" content="https://golfot.my.id/images/banner.png" />
 
   <!-- favicon -->
   
@@ -143,6 +143,25 @@
   margin-left: 16px;
   }
   
+  .modal-dialog-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  transition: transform 0.3s ease-out;
+  }
+  
+  .modal.fade .modal-dialog-bottom {
+  transform: translateY(100%);
+  }
+  
+  .modal.show .modal-dialog-bottom {
+  transform: translateY(0);
+  }
+  
   
   </style>
 
@@ -166,7 +185,7 @@
  </div>
  </nav>
  
- <div class="modal-body mx-3">
+ <div class="modal-body mx-3 fb">
  
  <div class="section my-4">
  <div class="title" data-bs-toggle="modal" data-bs-target="#modalNav">
@@ -212,7 +231,7 @@
   </div>
  
  </div>
- <div class="modal-footer border-0 p-4">
+ <div class="modal-footer border-0 p-4 fb">
  <a href="https://trakteer.id/golfot/tip" class="btn w-100 p-3 rounded-3" style="background-color: #CDF202;">Trakteer Golfot</a>
  </div>
  
@@ -221,24 +240,25 @@
  </div>
  
 
-  <div class="modal" id="myModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content mx-3 rounded-4" style="background: #272727; color: white;">
-  <div class="modal-header d-none">
-  <h5 class="modal-title">Modal title</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body d-flex flex-column align-items-center text-center p-4">
-  <img src="https://cdn-icons-png.flaticon.com/512/8799/8799036.png" width="200">
-  <h4 class="mt-4">Maaf, pertandingan ini belum dimulai</h4>
-  <p style="opacity: 0.5;">Waktu tersisa <span id="countdown"></span> kembali lagi nanti ya</p>
-  <button type="button" class="btn mt-3 w-100 p-3 rounded-5" style="background-color: #CDF202;" data-bs-dismiss="modal">Oke mengerti</button>
-  </div>
-  </div>
-  </div>
-  </div>
-  
-  
+ <div class="modal fade" id="myModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-bottom">
+ <div class="modal-content rounded-4" style="background: #272727; color: white;">
+ <div class="modal-header d-none">
+ <h5 class="modal-title">Modal title</h5>
+ <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ </div>
+ <div class="modal-body d-flex flex-column align-items-center text-center p-4">
+ <img src="https://golfot.my.id/images/IMG_20241011_215119.png" width="200">
+ <h4 class="mt-4 fb">Maaf, pertandingan ini belum dimulai</h4>
+ <p class="fr" style="opacity: 0.5;">Waktu tersisa <span id="countdown"></span> kembali lagi nanti ya</p>
+ <button type="button" class="btn mt-3 w-100 p-3 rounded-5 fb" style="background-color: #CDF202;" data-bs-dismiss="modal">Kembali</button>
+ </div>
+ </div>
+ </div>
+ </div>
+ 
+ 
+ 
   <nav class="navbar header fixed-top border-btm" id="header">
   <div class="container-fluid py-2 me-3 ms-2">
   <a class="navbar-brand" href="#">
@@ -273,7 +293,7 @@
   
   <section id="datas" style="display: none;">
   <div id="daftarMatchLive" class="container"></div>
-  <div class="mx-4 my-4">
+  <div class="mx-4 my-4 fb">
   <h3 style="margin-left: 5px;">Pertandingan mendatang</h3>
   </div>
   <div id="daftarMatchnoLive" class="container"></div>
@@ -281,10 +301,10 @@
   
   <div class="toast" id="toast">
   <div class="content">
-  <div class="title">Trakteer Golfot</div>
-  <div class="subtitle">Dukungan kamu sangat berarti bagi kami.</div>
+  <div class="title fb">Trakteer Golfot</div>
+  <div class="subtitle fr">Dukungan kamu sangat berarti bagi kami.</div>
   </div>
-  <div class="buttons">
+  <div class="buttons fb">
   <a href="https://trakteer.id/golfot/tip" target="_blank">Trakteer</a>
   <img src="images/close.png" alt="Close" onclick="closeToast()">
   </div>
