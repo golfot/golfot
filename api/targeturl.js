@@ -1,4 +1,4 @@
 // api/serverurl.js
 
-const targetUrl = 'https://sport.bolasiar.bond/';
+const targetUrl = 'https://svr.bolasiar.bond/';
 module.exports = targetUrl;
